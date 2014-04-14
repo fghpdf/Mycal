@@ -2,11 +2,11 @@
 #include <stdlib.h>
 #include <ctype.h>
 #include <math.h>
-#include <vector>
+#include "MyH.h"
 #include "token.h"
 #include "cuberoot.h"
 #include "invsqrt.h"
-using namespace std;
+//include "CalDebug.cpp"
 
 #define LINE_BUF_SIZE (1024)
 
@@ -355,12 +355,12 @@ void get_token(Token *token)
 		}
 		else if (current_char == '[')
 		{
-			token->kind = LEFT_BACKET_TOKEN;
+			token->kind = LEFT_BRACKET_TOKEN;
 			return;
 		}
 		else if (current_char == ']')
 		{
-			token->kind = RIGHT_BACKET_TOKEN;
+			token->kind = RIGHT_BRACKET_TOKEN;
 			return;
 		}
 		else if (isdigit(current_char))
@@ -454,19 +454,19 @@ static double parse_primary_expression()
 		}
 		return value;
 	}
-	else if (token.kind == LEFT_BACKET_TOKEN)
+	else if (token.kind == LEFT_BRACKET_TOKEN)
 	{
 		for (int i = 0;; i++)
 		{
 			group[i] = parse_expression();
 			length++;
 			my_get_token(&token);
-			if (token.kind != RIGHT_BACKET_TOKEN && token.kind != COMMA_TOKEN)
+			if (token.kind != RIGHT_BRACKET_TOKEN && token.kind != COMMA_TOKEN)
 			{
 				fprintf(stderr, "missing ']' or ',' error.\n");
 				exit(1);
 			}
-			if (token.kind == RIGHT_BACKET_TOKEN)
+			if (token.kind == RIGHT_BRACKET_TOKEN)
 			{
 				break;
 			}
@@ -630,7 +630,7 @@ static double parse_primary_expression()
 		double x;
 		value = 1;
 		x = parse_expression();
-		if ((x - 90 * floor(x / 90)) != 0.0)
+		if (floor(x) != x || x < 0)
 		{
 			printf("the fact(x)`s x must be natural number!\n");
 			exit(1);
@@ -888,6 +888,7 @@ static double parse_term()
 	return v1;
 }
 
+
 double parse_expression()
 {
 	double v1;
@@ -937,6 +938,14 @@ double parse_line(void)
 	return value;
 }
 
+
+
+
+
+
+
+
+
 int main(int argc, char **argv)
 {
 	char line[LINE_BUF_SIZE];
@@ -944,6 +953,10 @@ int main(int argc, char **argv)
 
 	while (fgets(line, LINE_BUF_SIZE, stdin) != NULL)
 	{
+		//cal_debug(line);
+		cal_lower(line);
+		cal_debug(line);
+		cal_compress(line);
 		set_line(line);
 		value = parse_line();
 		printf(">>%f\n", value);
