@@ -81,6 +81,7 @@
     <ClInclude Include="cuberoot.h" />
     <ClInclude Include="glnode.h" />
     <ClInclude Include="invsqrt.h" />
+    <ClInclude Include="MyH.h" />
     <ClInclude Include="stagroup.h" />
     <ClInclude Include="token.h" />
   </ItemGroup>

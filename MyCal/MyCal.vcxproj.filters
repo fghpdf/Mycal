@@ -30,6 +30,9 @@
     <ClInclude Include="stagroup.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="MyH.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="lexicalanalyzer.cpp">
